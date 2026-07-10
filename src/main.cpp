@@ -1,26 +1,37 @@
 #include <emscripten.h>
-#include <iostream>
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
 
-// extern "C" + 返回普通C字符串指针，完全兼容C链接规范
 extern "C"
 EMSCRIPTEN_KEEPALIVE
-const char* getAuthorInfo() {
-    return "姓名：XXX | C++开发者 | WebAssembly爱好者";
+char* getAuthorInfo() {
+    const char* raw = "姓名: XXX | C++开发者 | WebAssembly爱好者";
+    size_t len = strlen(raw) + 1;
+    char* buf = (char*)malloc(len);
+    strcpy(buf, raw);
+    return buf;
 }
 
 extern "C"
 EMSCRIPTEN_KEEPALIVE
-const char* getSkillList() {
-    return "C++ / OpenGL / WebAssembly / 后端开发";
+char* getSkillList() {
+    const char* raw = "C++ / OpenGL / WebAssembly / 后端开发";
+    size_t len = strlen(raw) + 1;
+    char* buf = (char*)malloc(len);
+    strcpy(buf, raw);
+    return buf;
 }
 
 extern "C"
 EMSCRIPTEN_KEEPALIVE
 void printLog(const char* msg) {
-    std::cout << "[C++日志] " << msg << std::endl;
+    printf("[C++日志] %s\n", msg);
 }
 
-int main() {
-    std::cout << "C++个人主页Wasm模块加载完成！" << std::endl;
-    return 0;
+// 新增释放内存函数，避免内存泄漏
+extern "C"
+EMSCRIPTEN_KEEPALIVE
+void freeStr(char* p) {
+    free(p);
 }

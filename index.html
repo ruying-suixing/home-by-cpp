@@ -16,19 +16,23 @@
     </div>
 
 <script>
-// 不使用let，直接全局赋值Module，解决重复声明报错
 Module = {
     onRuntimeInitialized: function() {
         document.getElementById('loading').innerText = "✅ Wasm加载完成";
         const btn = document.getElementById('logBtn');
         btn.disabled = false;
-        // JS绑定点击事件，脱离onclick全局函数依赖
         btn.addEventListener('click', callCppLog);
 
-        // 初始化页面信息
-        const infoText = Module.ccall('getAuthorInfo', 'string', [], []);
-        const skillText = Module.ccall('getSkillList', 'string', [], []);
+        // 获取作者信息
+        const infoPtr = Module.ccall('getAuthorInfo', 'number', [], []);
+        const infoText = Module.UTF8ToString(infoPtr);
+        Module.ccall('freeStr', null, ['number'], [infoPtr]); // 释放
         document.getElementById('info').innerText = infoText;
+
+        // 获取技能栈
+        const skillPtr = Module.ccall('getSkillList', 'number', [], []);
+        const skillText = Module.UTF8ToString(skillPtr);
+        Module.ccall('freeStr', null, ['number'], [skillPtr]); // 释放
         document.getElementById('skills').innerText = "技能栈：" + skillText;
     }
 };
