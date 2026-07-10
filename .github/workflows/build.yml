@@ -2,6 +2,7 @@ name: Build Wasm & Deploy Static Files
 on:
   push:
     branches: [ main ]
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -9,25 +10,23 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # 换成市面上通用靠谱的emsdk安装Action
       - name: Setup Emscripten
         uses: mymindstorm/setup-emsdk@v14
         with:
           version: latest
 
-      # 校验编译器是否就绪
       - name: Check emcc version
         run: emcc -v
 
-      # 编译C++为 wasm
       - name: Compile C++ to Wasm
         run: |
           emcc src/main.cpp -o main.js \
             -s EXPORTED_RUNTIME_METHODS='["ccall"]' \
             -s ALLOW_MEMORY_GROWTH=1 \
             -Oz
+          # 禁止 Jekyll 处理，保证 wasm 正常
+          touch .nojekyll
 
-      # 上传静态产物用于Pages部署
       - name: Upload static files
         uses: actions/upload-pages-artifact@v3
         with:
@@ -43,6 +42,8 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
