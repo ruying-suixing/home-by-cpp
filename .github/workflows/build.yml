@@ -21,10 +21,9 @@ jobs:
       - name: Compile C++ to Wasm
         run: |
           emcc src/main.cpp -o main.js \
-            -s EXPORTED_RUNTIME_METHODS='["ccall"]' \
+            -s EXPORTED_RUNTIME_METHODS='["ccall","UTF8ToString"]' \
             -s ALLOW_MEMORY_GROWTH=1 \
             -Oz
-          # 禁止 Jekyll 处理，保证 wasm 正常
           touch .nojekyll
 
       - name: Upload static files

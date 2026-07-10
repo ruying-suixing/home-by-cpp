@@ -29,7 +29,6 @@ void printLog(const char* msg) {
     printf("[C++日志] %s\n", msg);
 }
 
-// 新增释放内存函数，避免内存泄漏
 extern "C"
 EMSCRIPTEN_KEEPALIVE
 void freeStr(char* p) {

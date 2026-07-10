@@ -26,27 +26,25 @@ Module = {
         // 获取作者信息
         const infoPtr = Module.ccall('getAuthorInfo', 'number', [], []);
         const infoText = Module.UTF8ToString(infoPtr);
-        Module.ccall('freeStr', null, ['number'], [infoPtr]); // 释放
+        Module.ccall('freeStr', null, ['number'], [infoPtr]);
         document.getElementById('info').innerText = infoText;
 
         // 获取技能栈
         const skillPtr = Module.ccall('getSkillList', 'number', [], []);
         const skillText = Module.UTF8ToString(skillPtr);
-        Module.ccall('freeStr', null, ['number'], [skillPtr]); // 释放
+        Module.ccall('freeStr', null, ['number'], [skillPtr]);
         document.getElementById('skills').innerText = "技能栈：" + skillText;
     }
 };
 
-// 全局函数
 function callCppLog() {
-    if (!Module || typeof Module.ccall !== "function") {
-        alert("Wasm还在加载，请稍后点击！");
+    if (!Module?.ccall) {
+        alert("Wasm加载中，请稍后点击");
         return;
     }
     Module.ccall('printLog', null, ['string'], ['欢迎访问我的C++主页！']);
 }
 </script>
-<!-- Module配置写在前面，后加载main.js -->
 <script src="main.js"></script>
 </body>
 </html>
