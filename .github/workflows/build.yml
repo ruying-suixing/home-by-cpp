@@ -23,7 +23,6 @@ jobs:
       - name: Compile C++ to Wasm
         run: |
           emcc src/main.cpp -o main.js \
-            -s EXPORTED_FUNCTIONS='["getAuthorInfo","getSkillList","printLog"]' \
             -s EXPORTED_RUNTIME_METHODS='["ccall"]' \
             -s ALLOW_MEMORY_GROWTH=1 \
             -Oz

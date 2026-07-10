@@ -1,16 +1,16 @@
 #include <emscripten.h>
 #include <iostream>
-#include <string>
 
+// extern "C" + 返回普通C字符串指针，完全兼容C链接规范
 extern "C"
 EMSCRIPTEN_KEEPALIVE
-std::string getAuthorInfo() {
+const char* getAuthorInfo() {
     return "姓名：XXX | C++开发者 | WebAssembly爱好者";
 }
 
 extern "C"
 EMSCRIPTEN_KEEPALIVE
-std::string getSkillList() {
+const char* getSkillList() {
     return "C++ / OpenGL / WebAssembly / 后端开发";
 }
 
