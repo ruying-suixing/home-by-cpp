@@ -1,0 +1,33 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    background: #0f172a;
+    color: #fff;
+    font-family: "Microsoft Yahei", sans-serif;
+}
+.container {
+    max-width: 800px;
+    margin: 100px auto;
+    text-align: center;
+}
+h1 {
+    margin-bottom: 30px;
+    color: #38bdf8;
+}
+#info, #skills {
+    font-size: 18px;
+    margin: 15px 0;
+}
+button {
+    padding: 10px 24px;
+    background: #38bdf8;
+    border: none;
+    border-radius: 6px;
+    color: #000;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 20px;
+}

@@ -1,0 +1,13 @@
+{
+    "configurations": [
+        {
+            "name": "Wasm",
+            "compilerPath": "",
+            "includePath": [
+                "${workspaceFolder}/**"
+            ],
+            "defines": ["EMSCRIPTEN"]
+        }
+    ],
+    "version": 4
+}
