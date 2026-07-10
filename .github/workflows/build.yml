@@ -22,7 +22,6 @@ jobs:
         run: |
           emcc src/main.cpp -o main.js \
             -s EXPORTED_RUNTIME_METHODS='["ccall"]' \
-            -s EXPORTED_FUNCTIONS='["getAuthorInfo","getSkillList","printLog"]' \
             -s ALLOW_MEMORY_GROWTH=1 \
             -Oz
           # 禁止 Jekyll 处理，保证 wasm 正常
